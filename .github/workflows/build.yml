@@ -188,7 +188,7 @@ jobs:
             FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
-          platforms: linux/x86_64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           extra-args: |
             --target=${{ matrix.build_target }}
 
