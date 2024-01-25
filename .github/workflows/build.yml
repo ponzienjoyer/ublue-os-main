@@ -62,6 +62,11 @@ jobs:
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
 
+      - name: Install qemu dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static
+
       - name: Matrix Variables
         shell: bash
         run: |
@@ -124,12 +129,10 @@ jobs:
           done
 
           if [[ "${{ matrix.is_latest_version }}" == "true" ]] && \
-             [[ "${{ matrix.is_stable_version }}" == "true" ]] && \
-             [[ "${{ matrix.arch }}" == "amd64" ]]; then
+             [[ "${{ matrix.is_stable_version }}" == "true" ]]; then
               BUILD_TAGS+=("${TIMESTAMP}")
               BUILD_TAGS+=("latest")
-          elif [[ "${{ matrix.is_gts_version }}" == "true" ]] && \
-               [[ "${{ matrix.arch }}" == "amd64" ]]; then
+          elif [[ "${{ matrix.is_gts_version }}" == "true" ]]; then
               BUILD_TAGS+=("gts-${TIMESTAMP}")
               BUILD_TAGS+=("gts")
           fi
